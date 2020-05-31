@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#boardContainer {
+  background: #e6e0cf;
+  width: 100%;
+  height: 100%;
+}

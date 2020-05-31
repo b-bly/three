@@ -1,9 +1,11 @@
 import * as THREE from 'three';
-import Game from './game'
+import Game from './game';
+import './styles.css';
+
 
 const game = new Game({
   containerEl: document.getElementById('boardContainer'),
-  assetsUrl: '3d_assets/'
+  assetsUrl: './3d_assets/'
 });
 
 
