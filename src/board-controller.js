@@ -11,8 +11,13 @@ import Ground from './3d_assets/ground.png';
 import PieceShadow from './3d_assets/piece_shadow.png';
 import SquareDarkTexture from './3d_assets/square_light_texture.jpg';
 import SquareLightTexture from './3d_assets/square_dark_texture.jpg';
-import Board from './3d_assets/board.json';
-import Piece from './3d_assets/piece.json';
+// import Board from './3d_assets/board.json';
+// import Piece from './3d_assets/piece.json';
+
+const server = 'http://127.0.0.1:8000/';
+
+const path = require('path');
+
 
 export default class BoardController {
   options = null;
@@ -92,13 +97,20 @@ export default class BoardController {
         callback();
       }
     }
-    console.log('Piece');
-    console.log(Piece)
-    console.log(Board);
+    // console.log('Piece');
+    // console.log(Piece)
+    // console.log(Board);
 
     // load board
 
-    loader.load(Board, (geom) => {
+    // Apparently there is a lot of people who also have the issue of wanting a json file
+    // generated, not just parsed into the js file
+    // https://github.com/webpack/webpack/issues/6586
+
+    // loader.load('./3d_assets/board.json', (geom) => {
+    // loader.load(__dirname + '/board.json', (geom) => {
+      loader.load(server + 'dist/board.obj', (geom) => {
+
       this.boardModel = new THREE.Mesh(geom, this.materials.boardMaterial);
       this.scene.add(boardModel);
       checkLoad();
@@ -106,7 +118,8 @@ export default class BoardController {
 
     // load piece
 
-    loader.load(Piece, (geometry) => {
+    // loader.load('./3d_assets/piece.json', (geometry) => {
+    loader.load(server + 'dist/piece.obj', (geometry) => {
       this.pieceGeometry = geometry;
       checkLoad();
     });
