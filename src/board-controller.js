@@ -11,10 +11,11 @@ import Ground from './3d_assets/ground.png';
 import PieceShadow from './3d_assets/piece_shadow.png';
 import SquareDarkTexture from './3d_assets/square_light_texture.jpg';
 import SquareLightTexture from './3d_assets/square_dark_texture.jpg';
-// import Board from './3d_assets/board.json';
-// import Piece from './3d_assets/piece.json';
+import './3d_assets/board.json';
+import './3d_assets/piece.json';
 
-const server = 'http://127.0.0.1:8000/';
+
+const server = 'http://localhost:8000/'; //127.0.0.1:8000/';
 
 const path = require('path');
 
@@ -107,9 +108,7 @@ export default class BoardController {
     // generated, not just parsed into the js file
     // https://github.com/webpack/webpack/issues/6586
 
-    // loader.load('./3d_assets/board.json', (geom) => {
-    // loader.load(__dirname + '/board.json', (geom) => {
-      loader.load(server + 'dist/board.obj', (geom) => {
+    loader.load(server + '3d-assets/board.json', (geom) => {
 
       this.boardModel = new THREE.Mesh(geom, this.materials.boardMaterial);
       this.scene.add(boardModel);
@@ -119,7 +118,7 @@ export default class BoardController {
     // load piece
 
     // loader.load('./3d_assets/piece.json', (geometry) => {
-    loader.load(server + 'dist/piece.obj', (geometry) => {
+    loader.load(server + '3d-assets/piece.json', (geometry) => {
       this.pieceGeometry = geometry;
       checkLoad();
     });

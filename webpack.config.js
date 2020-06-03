@@ -1,17 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 // const browserPlugin = require('webpack-browser-plugin');
-// const chromeUserDataDir = './dist';
+const chromeUserDataDir = path.resolve(__dirname, 'dist');
 
 module.exports = {
   entry: {
     app: './src/index.js',
-    // game: './src/game.js',
-    // boardController: './src/board-controller.js'
+    game: './src/game.js',
+    boardController: './src/board-controller.js',
+    // server: './src/server.js'
   },
-
-  // mode: 'development',
+  devtool: 'inline-source-map',
+  mode: 'development',
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
@@ -21,6 +23,16 @@ module.exports = {
       template: path.resolve(__dirname, 'src/index.ejs'),
       filename: './index.html'
     }),
+    // new browserPlugin({
+    //   openOptions: {
+    //     app: [
+    //       'chrome',
+    //       //'--incognito',
+    //       '--disable-web-security', // to enable CORS
+    //       '--user-data-dir=' + chromeUserDataDir // to let Chrome create and store here developers plugins, settings, etc.
+    //     ]
+    //   }
+    // })
   ],
   output: {
     filename: '[name].bundle.js',
@@ -29,7 +41,11 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    hot: true,
+    host: 'localhost',
     port: 8000,
+    publicPath: '/',
+    writeToDisk: true,
     headers: {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
       "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
@@ -38,6 +54,31 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(obj)$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: "./3d-assets/[name].[ext]"
+            }
+          }
+        ]
+      },
+      {
+        type: 'javascript/auto',
+        test: /\.json$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: "./3d-assets/[name].[ext]"
+            }
+          }
+        ]
+      },
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
@@ -55,6 +96,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: /(node_modules|bower_components)/,
         use: [
           'style-loader',
           'css-loader'
@@ -62,46 +104,21 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader',
-        ],
-      },
-      // {
-      //   type: 'javascript/auto',
-      //   test: /\.jsonx$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //       options: {
-      //         name: "./[name].[ext]"
-      //       }
-      //     }
-      //   ]
-      // },
-      {
-        test: /\.(json|obj)$/,
+        exclude: /(node_modules|bower_components)/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: "./[name].[ext]"
+              name: "./3d-assets/[name].[ext]"
             }
           }
-        ]
+        ],
       }
+
     ]
   }
   // plugins: [
-  //   new browserPlugin({
-  //     openOptions: {
-  //       app: [
-  //         'chrome',
-  //         //'--incognito',
-  //         '--disable-web-security', // to enable CORS
-  //         '--user-data-dir=' + path.resolve(chromeUserDataDir) // to let Chrome create and store here developers plugins, settings, etc.
-  //       ]
-  //     }
-  //   })
+
   // ]
 };
 

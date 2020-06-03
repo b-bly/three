@@ -1,8 +1,9 @@
-// import * as THREE from 'three';
-// import Game from './game';
-// import './styles.css';
-// import './3d_assets/piece.obj';
-// import './3d_assets/board.obj';
+import * as THREE from 'three';
+// import * as WEBGL from 'three/examples/jsm/WebGL.js';
+import Game from './game';
+import './styles.css';
+import './3d_assets/piece.obj';
+import './3d_assets/board.obj';
 
 
 function BoardContainer() {
@@ -12,15 +13,15 @@ function BoardContainer() {
 }
 document.body.appendChild(BoardContainer());
 
-const container = document.getElementById('boardContainer');
-console.log('container');
-console.log(document.body);
-console.log(container);
+// const container = document.getElementById('boardContainer');
+// console.log('container');
+// console.log(document.body);
+// console.log(container);
 
-// const game = new Game({
-//   containerEl: document.getElementById('boardContainer'),
-//   assetsUrl: './3d_assets/'
-// });
+const game = new Game({
+  containerEl: document.getElementById('boardContainer'),
+  assetsUrl: './3d_assets/'
+});
 
 
 // var scene = new THREE.Scene();
